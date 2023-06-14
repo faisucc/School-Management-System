@@ -1,0 +1,837 @@
+#include<iostream.h>
+#include<conio.h>
+#include<process.h>
+#include<stdio.h>
+#include<fstream.h>
+#include<ctype.h>
+#include<string.h>
+void PrincipalMenu();
+void PersonalInfo();
+void MarksDetails();
+void AddPersonalInfo();
+void AddMarksDetails();
+void SearchPersonalInfo();
+void SearchMarksDetails();
+void ModifyPersonalInfo();
+void ModifyMarksDetails();
+void DeletePersonalInfo();
+void DeleteMarksDetails();
+void ReportCard();
+
+class students
+{
+	int admission_number;
+	char student_name[20];
+	char fathers_name[20];
+	char mothers_name[20];
+	char students_class[5];
+	long int registration_number;
+
+	public:
+
+	void add_data()
+	{
+
+	cout<<endl<<"Enter admission number of student. ";
+	cin>>admission_number;
+	cout<<endl<<"Enter name of the student. ";
+	gets(student_name);
+	cout<<endl<<"Enter the student's father's name. ";
+	gets(fathers_name);
+	cout<<endl<<"Enter the student's mother's name. ";
+	gets(mothers_name);
+	cout<<endl<<"Enter the grade in which the student is studying. ";
+	gets(students_class);
+	cout<<endl<<"Enter the student's exam registration number. ";
+	cin>>registration_number;
+
+	}
+
+	void showdata()               //to display the details
+	{
+	    cout<<endl<<"Admission Number: "<<admission_number;
+	    cout<<endl<<"Student's Name: "<<student_name;
+	    cout<<endl<<"Father's Name: "<<fathers_name;
+	    cout<<endl<<"Mother's Name: "<<mothers_name;
+	    cout<<endl<<"Class: "<<students_class;
+	    cout<<endl<<"Registration Number: "<<registration_number;
+	}
+
+	int getadmission_number()               //to access the private member admission number.
+	{	return admission_number;
+	}
+	char *getstudent_name()
+	{
+		return student_name;
+	}
+	char *getfathers_name()
+	{
+		return fathers_name;
+	}
+	char *getmothers_name()
+	{
+		return mothers_name;
+	}
+	char *getclass()
+	{
+		return students_class;
+	}
+	long int getregistration_number()
+	{
+		return registration_number;
+	}
+	void modify();        //to modify record(s).
+	void view();
+
+}s1,s2;
+void students::modify()
+{
+       char stu_name[20];
+       char fath_name[20];
+       char moth_name[20];
+       char stu_grd[5];
+       long int reg_no;
+
+       cout<<endl<<"Enter the new name of the student.(Type '.' if you do not wish to change the name.) ";
+       gets(stu_name);
+       cout<<endl<<"Enter the new name of the student's father. (Type '.' to retain old name) ";
+       gets(fath_name);
+       cout<<endl<<"Enter the new name of the student's mother. (Type '.'to retain old name) ";
+       gets(moth_name);
+       cout<<endl<<"Enter the new class of the student.(Type '.' to retain old class) ";
+       gets(stu_grd);
+       cout<<endl<<"Enter the student's new registration number.(Type '-1' to retain old number) ";
+       cin>>reg_no;
+
+       if(strcmp(stu_name,".")!=0)
+	strcpy(student_name,stu_name);
+       if(strcmp(fath_name,".")!=0)
+	strcpy(fathers_name,fath_name);
+       if(strcmp(moth_name,".")!=0)
+	strcpy(mothers_name,moth_name);
+       if(strcmp(stu_grd,".")!=0)
+	strcpy(students_class,stu_grd);
+       if(reg_no!=-1)
+	 registration_number=reg_no;
+
+}
+
+void students::view()
+{
+	students s2;
+	fstream file2("students.dat",ios::in|ios::binary);
+
+	while(file2.read((char*)&s2,sizeof(s2)))
+	{
+	cout<<endl<<"Admission Number: "<<s2.admission_number;
+	cout<<endl<<"Student's Name: "<<s2.student_name;
+	cout<<endl<<"Father's Name: "<<s2.fathers_name;
+	cout<<endl<<"Mother's Name: "<<s2.mothers_name;
+	cout<<endl<<"Class: "<<s2.students_class;
+	cout<<endl<<"Registration Number: "<<s2.registration_number;
+	}
+	file2.close();
+}
+
+class exams
+{
+	int admission_number;
+	int chemistry,physics,mathematics,computer;
+
+	public:
+
+	void exam_add_data()
+	{
+
+	cout<<endl<<"Enter admission number of student. ";
+	cin>>admission_number;
+	cout<<endl<<"Enter chemistry marks. ";
+	cin>>chemistry;
+	cout<<endl<<"Enter the physics marks. ";
+	cin>>physics;
+	cout<<endl<<"Enter the mathematics marks. ";
+	cin>>mathematics;
+	cout<<endl<<"Enter computer science marks. ";
+	cin>>computer;
+
+
+	}
+
+	void exam_showdata()               //to display the details
+	{
+	   cout<<endl<<"Admission Number: "<<admission_number;
+	   cout<<endl<<"Chemistry Marks: "<<chemistry;
+	   cout<<endl<<"Physics Marks: "<<physics;
+	   cout<<endl<<"Mathematics Marks: "<<mathematics;
+	   cout<<endl<<"Computer Science Marks: "<<computer;
+	}
+
+	int getadmission_number()               //to access the private member admission number.
+	{	return admission_number;
+	}
+	int getchemistry()
+	{
+		return chemistry;
+	}
+	int getphysics()
+	{
+		return physics;
+	}
+	int getmathematics()
+	{
+		return mathematics;
+	}
+	int getcomputer()
+	{
+		return computer;
+	}
+	void exam_modify();        //to modify record(s).
+	void exam_view();
+
+}e1,e2;
+void exams::exam_modify()
+{
+       long int admin_no;
+       int chem,phy,math,comp;
+       cout<<endl<<"Enter the student's new admission number.(Type '-1' to retain old number) ";
+       cin>>admin_no;
+       cout<<endl<<"Enter the new chemistry marks of the student.(Type '-1' to retain.) ";
+       cin>>chem;
+       cout<<endl<<"Enter the new physics marks the student. (Type '-1' to retain) ";
+       cin>>phy;
+       cout<<endl<<"Enter the new mathematics marks. (Type '-1'to retain) ";
+       cin>>math;
+       cout<<endl<<"Enter the new computer science student.(Type '-1' to retain.) ";
+       cin>>comp;
+
+
+       if(chem!=-1)
+	chemistry=chem;
+       if(phy!=-1)
+	physics=phy;
+       if(math!=-1)
+	mathematics=math;
+       if(comp!=-1)
+	computer=comp;
+}
+
+void exams::exam_view()
+{
+	exams e2;
+	fstream efile2("exam.dat",ios::in|ios::binary);
+
+	while(efile2.read((char*)&e2,sizeof(e2)))
+	{
+	cout<<endl<<"Admission: "<<e2.admission_number;
+	cout<<endl<<"Chemistry: "<<e2.chemistry;
+	cout<<endl<<"Physics: "<<e2.physics;
+	cout<<endl<<"Mathematics "<<e2.mathematics;
+	cout<<endl<<"Computer Science "<<e2.computer;
+	}
+	efile2.close();
+}
+
+void PersonalDetails()
+{       int ch3;
+	clrscr();
+
+	while(1)
+      {        clrscr();
+
+		gotoxy(1,1);
+		cout<<"********************************************************************************";
+		gotoxy(30,3);
+		cout<<"STUDENT MANAGEMENT SYSTEM";
+		gotoxy(1,5);
+		cout<<"********************************************************************************";
+		gotoxy(30,6);
+		cout<<"1. Add a new record. ";
+		gotoxy(30,7);
+		cout<<"2. Search for an existing record. ";
+		gotoxy(30,8);
+		cout<<"3. Modify an existing record. ";
+		gotoxy(30,9);
+		cout<<"4. Delete an existing record. ";
+		gotoxy(30,10);
+		cout<<"5. Return to main menu. ";
+		gotoxy(1,11);
+		cout<<"********************************************************************************";
+		gotoxy(30,13);
+		cout<<"Please enter your choice. ";
+		cin>>ch3;
+		getch();
+		switch(ch3)
+		{
+		  case 1: AddPersonalInfo();
+			  break;
+		  case 2: SearchPersonalInfo();
+			  break;
+		  case 3: ModifyPersonalInfo();
+			  break;
+		  case 4: DeletePersonalInfo();
+			  break;
+		  case 5: break;
+
+		}
+		  break;
+       }
+
+ }
+//==========================CASE 1 OF OPTION 1==============================
+  void AddPersonalInfo()
+  {
+		clrscr();
+
+
+	    fstream file1("students.dat",ios::app|ios::binary);
+	    if(!file1)
+	    {
+	     fstream file1("students.dat",ios::out|ios::binary);
+	      if(!file1)
+	      {
+	       cout<<endl<<"Cannot open file. ";
+	       exit(0);
+	      }
+	    }
+
+	   cout<<endl<<"Please enter the data as required. ";
+	   s1.add_data();
+	   file1.write((char*)&s1,sizeof(s1));
+	   file1.close();
+	   cout<<endl<<"Record succesfully added. ";
+
+
+  }
+//=====================CASE 2 OF OPTION 1====================================
+
+void SearchPersonalInfo()
+
+{
+	 clrscr();
+	   students s1;
+	   int admno;
+	   char found='n';
+	   long int pos;
+	   char response3='Y';
+	   fstream file3("students.dat",ios::in|ios::binary);
+	while(response3=='Y'||response3=='y')
+	{
+		cout<<endl<<"Enter the admission number to be searched. ";
+		cin>>admno;
+
+		file3.seekg(0,ios::beg);
+
+		while(file3.read((char*)&s1,sizeof(s1)))
+		{
+			if(s1.getadmission_number()==admno)
+			{
+			    found='Y';
+			    s1.showdata();
+			}
+		}
+		if(found=='N'||found=='n')
+		 cout<<endl<<"Record not found. ";
+		cout<<endl<<"Do you wish to search for another record? Type 'Y' for Yes and 'N' for No. ";
+		cin>>response3;
+		file3.close();
+		file3.open("students.dat",ios::in|ios::binary);
+		clrscr();
+		}
+}
+ //=================================CASE 3 OF OPTION 1======================
+void ModifyPersonalInfo()
+{
+		int admno;
+		long pos;
+		clrscr();
+		char response4='Y';
+		fstream file4("students.dat",ios::in|ios::out|ios::binary);
+		if(!file4)
+		{
+			    cout<<endl<<"Cannot open file. ";
+			    exit(0);
+
+		}
+
+		while(response4=='Y'||response4=='y')       //initiate modification process.
+	      {
+		cout<<endl<<"Enter the admission number to be searched. ";
+		cin>>admno;
+
+		file4.seekg(0,ios::beg);
+
+		while(file4.read((char*)&s1,sizeof(s1)))
+		{
+
+			if(s1.getadmission_number()==admno)
+			{       pos=file4.tellg();
+				cout<<endl<<"The old record: ";
+				s1.showdata();
+				s1.modify();
+				file4.seekp(pos-sizeof(s1));
+				file4.write((char*)&s1,sizeof(s1));
+			}
+		}
+		cout<<endl<<"Do you wish to modify another record? ";
+		cin>>response4;
+		file4.close();
+		file4.open("students.dat",ios::in|ios::out|ios::binary);
+	      }
+		file4.close();
+		cout<<endl<<"The modifed records is as follows: ";
+		s1.view();
+
+}
+
+
+
+//============================CASE 4 OF OPTION 1==============================
+ void DeletePersonalInfo()
+ {
+	       int admno;
+	       clrscr();
+	       fstream file5("students.dat",ios::in|ios::binary);
+	       fstream file6("temp.dat",ios::out|ios::binary);
+	       char found5='f',confirm='n';
+	       cout<<endl<<"Enter the admission number of the record you wish to delete. ";
+	       cin>>admno;
+	       while(file5.read((char*)&s1,sizeof(s1)))
+	      {
+		if(s1.getadmission_number()==admno)
+		{
+		   cout<<endl<<"The old record: ";
+		   s1.showdata();
+		   found5='t';
+		   cout<<endl<<"Are you sure you want to delete the selected record? (Type 'y' for yes and 'n' for no) ";
+		   cin>>confirm;
+		   if(confirm=='n'||confirm=='N')
+		   file6.write((char*)&s1,sizeof(s1));
+		}
+		else
+		 file6.write((char*)&s1,sizeof(s1));
+	      }
+
+		if(found5=='f')
+		 cout<<endl<<"The record you are looking for does not exist. ";
+		file5.close();
+		file6.close();
+		remove("students.dat");
+		rename("temp.dat","students.dat");
+		file5.open("students.dat",ios::in|ios::binary);
+		cout<<endl<<"Existing records: ";
+		while(file5.read((char*)&s2,sizeof(s2)))
+	     {
+		if(file5.eof())
+		break;
+	       s2.showdata();
+	     }
+
+	       file5.close();
+
+
+ }
+ //=====================OPTION 1 COMPLETELY DONE.============================
+
+void PrincipalMenu()
+{
+
+			int ch2;
+			clrscr();
+			while(1)
+		       {
+			clrscr();
+			gotoxy(1,1);
+			cout<<"********************************************************************************";
+			gotoxy(30,3);
+			cout<<"STUDENT MANAGEMENT SYSTEM";
+			gotoxy(1,5);
+			cout<<"********************************************************************************";
+			gotoxy(30,6);
+			cout<<"1. Student's Personal Information ";
+			gotoxy(30,7);
+			cout<<"2. Student's Examination Marks";
+			gotoxy(30,8);
+			cout<<"3. Return to Main Menu ";
+			gotoxy(1,9);
+			cout<<"********************************************************************************";
+			gotoxy(30,11);
+			cout<<"Please enter your choice. ";
+			cin>>ch2;
+			getch();
+			switch(ch2)
+			{
+			     case 1: clrscr();
+				     PersonalDetails();
+				     break;
+
+			     case 2: clrscr();
+				     MarksDetails();
+				     break;
+			     case 3: break;
+			}
+
+			       break;
+
+		     }
+}
+ void MarksDetails()
+ {
+	int ch3;
+	clrscr();
+	while(1)
+       {
+	gotoxy(1,1);
+	cout<<"********************************************************************************";
+	gotoxy(30,3);
+	cout<<"EXAM-MARK MANAGEMENT SYSTEM";
+	gotoxy(1,5);
+	cout<<"********************************************************************************";
+	gotoxy(30,6);
+	cout<<"1. Add a new record. ";
+	gotoxy(30,7);
+	cout<<"2. Search for an existing record. ";
+	gotoxy(30,8);
+	cout<<"3. Modify an existing record. ";
+	gotoxy(30,9);
+	cout<<"4. Delete an existing record. ";
+	gotoxy(30,10);
+	cout<<"5. Return to main menu. ";
+	gotoxy(1,11);
+	cout<<"********************************************************************************";
+	gotoxy(30,13);
+	cout<<"Please enter your choice. ";
+	cin>>ch3;
+	switch(ch3)
+	{
+	    case 1: AddMarksDetails();
+		    break;
+	    case 2: SearchMarksDetails();
+		    break;
+	    case 3: ModifyMarksDetails();
+		    break;
+	    case 4: DeleteMarksDetails();
+		    break;
+	    case 5: break;
+	}
+	break;
+       }
+}
+//=====================CASE 1 OF OPTION 2===================================
+void AddMarksDetails()
+{
+		clrscr();
+
+		fstream efile1("exam.dat",ios::app|ios::binary);
+		if(!efile1)
+		{
+		fstream efile1("exam.dat",ios::out|ios::binary);
+		if(!efile1)
+		{
+		cout<<endl<<"Cannot open file. ";
+		exit(0);
+		}
+		}
+
+		cout<<endl<<"Please enter the data as required. ";
+		e1.exam_add_data();
+		efile1.write((char*)&e1,sizeof(e1));
+		efile1.close();
+		clrscr();
+		cout<<endl<<"Record succesfully added. ";
+
+}
+//=========================CASE 2 OF OPTION 2================================
+
+
+void SearchMarksDetails()
+{
+     clrscr();
+	   exams e1;
+	   int admno;
+	   char efound='n';
+	   long int epos;
+	   char eresponse3='Y';
+	   fstream efile3("exam.dat",ios::in|ios::binary);
+	while(eresponse3=='Y'||eresponse3=='y')
+	{
+		cout<<endl<<"Enter the admission number to be searched. ";
+		cin>>admno;
+
+		efile3.seekg(0,ios::beg);
+
+		while(efile3.read((char*)&e1,sizeof(e1)))
+		{
+			if(e1.getadmission_number()==admno)
+			{
+			    efound='Y';
+			    e1.exam_showdata();
+			}
+		}
+		if(efound=='N'||efound=='n')
+		 cout<<endl<<"Record not found. ";
+		cout<<endl<<"Do you wish to search for another record? Type 'Y' for Yes and 'N' for No. ";
+		cin>>eresponse3;
+		efile3.close();
+		efile3.open("exam.dat",ios::in|ios::binary);
+		clrscr();
+       }
+}
+//======================CASE 3 OF OPTION 2==================================
+
+void ModifyMarksDetails()
+{
+		int admno;
+		long epos;
+		clrscr();
+		char eresponse4='Y';
+		fstream efile4("exam.dat",ios::in|ios::out|ios::binary);
+		if(!efile4)
+		{
+			    cout<<endl<<"Cannot open file. ";
+			    exit(0);
+
+		}
+
+		while(eresponse4=='Y'||eresponse4=='y')       //initiate modification process.
+	      {
+		cout<<endl<<"Enter the admission number to be searched. ";
+		cin>>admno;
+
+		efile4.seekg(0,ios::beg);
+
+		while(efile4.read((char*)&e1,sizeof(e1)))
+		{
+
+			if(e1.getadmission_number()==admno)
+			{       epos=efile4.tellg();
+				cout<<endl<<"The old record: ";
+				e1.exam_showdata();
+				e1.exam_modify();
+				efile4.seekp(epos-sizeof(e1));
+				efile4.write((char*)&e1,sizeof(e1));
+			}
+		}
+		cout<<endl<<"Do you wish to modify another record? ";
+		cin>>eresponse4;
+		efile4.close();
+		efile4.open("exam.dat",ios::in|ios::out|ios::binary);
+	      }
+		efile4.close();
+		cout<<endl<<"The modifed records is as follows: ";
+		e1.exam_view();
+}
+//======================CASE 4 OPTION 2=====================================
+
+void DeleteMarksDetails()
+{
+		clrscr();
+		int admno;
+	       fstream efile5("exam.dat",ios::in|ios::binary);
+	       fstream efile6("temporary.dat",ios::out|ios::binary);
+	       char efound5='f',econfirm='n';
+	       cout<<endl<<"Enter the admission number of the record you wish to delete. ";
+	       cin>>admno;
+	       while(efile5.read((char*)&e1,sizeof(e1)))
+	      {
+		if(e1.getadmission_number()==admno)
+		{
+		   cout<<endl<<"The old record: ";
+		   e1.exam_showdata();
+		   efound5='t';
+		   cout<<endl<<"Are you sure you want to delete the selected record? (Type 'y' for yes and 'n' for no) ";
+		   cin>>econfirm;
+		   if(econfirm=='n'||econfirm=='N')
+		   efile6.write((char*)&e1,sizeof(e1));
+		}
+		else
+		 efile6.write((char*)&e1,sizeof(e1));
+	      }
+
+		if(efound5=='f')
+		 cout<<endl<<"The record you are looking for does not exist. ";
+		efile5.close();
+		efile6.close();
+		remove("exam.dat");
+		rename("temporary.dat","exam.dat");
+		efile5.open("exam.dat",ios::in|ios::binary);
+		efile5.close();
+}
+
+//=========================OPTION 2 COMPLETELY OVER==========================
+ void ReportCard()
+{
+   int admno,per;
+   float percentage;
+   clrscr();
+   cout<<"Enter the admission number of your student. ";
+   cin>>admno;
+   fstream ffile("students.dat",ios::in|ios::binary);
+   gotoxy(1,1);
+   clrscr();
+   gotoxy(1,1);
+   cout<<"*******************************************************************************";
+   gotoxy(35,3);
+   cout<<"REPORT CARD";
+   gotoxy(37,4);
+   cout<<"2019-20";
+   gotoxy(1,5);
+   cout<<"*******************************************************************************";
+  // getch();
+   ffile.seekg(0,ios::beg);
+
+   while(ffile.read( (char*)&s1,sizeof(s1) ) )
+   {
+       if(s1.getadmission_number()==admno)
+       {
+
+
+	  gotoxy(4,6);
+	  cout<<"Admission Number: "<<s1.getadmission_number();
+	  gotoxy(4,7);
+	  cout<<"Name: "<<s1.getstudent_name();
+	  gotoxy(4,8);
+	  cout<<"Class: "<<s1.getclass();
+	  gotoxy(4,9);
+	  cout<<"Father's Name: "<<s1.getfathers_name();
+	  gotoxy(4,10);
+	  cout<<"Mother's Name: "<<s1.getmothers_name();
+	  gotoxy(4,11);
+	  cout<<"Registration Number: "<<s1.getregistration_number();
+	  {  fstream ffile1("exam.dat",ios::in|ios::binary);
+	    ffile1.seekg(0,ios::beg);
+   while(ffile1.read((char*)&e1,sizeof(e1)))
+   {
+       if(e1.getadmission_number()==admno)
+       {
+	  per=(e1.getchemistry()+e1.getphysics()+e1.getmathematics()+e1.getcomputer());
+
+	  gotoxy(4,13);
+	  cout<<"Chemistry";
+	  gotoxy(7,14);
+	  cout<<e1.getchemistry();
+	  gotoxy(16,13);
+	  cout<<"Physics";
+	  gotoxy(18,14);
+	  cout<<e1.getphysics();
+	  gotoxy(26,13);
+	  cout<<"Mathematics";
+	  gotoxy(31,14);
+	  cout<<e1.getmathematics();
+	  gotoxy(40,13);
+	  cout<<"Computer";
+	  gotoxy(43,14);
+	  cout<<e1.getcomputer();
+	  gotoxy(51,13);
+	  cout<<"Overall Percentage";
+	  gotoxy(55,14);
+	  cout<<per/4;
+
+
+	  getch();
+	/*  gotoxy(4,19);
+	  cout<<"Press any key to exit. ";  */
+      }
+  }
+    ffile1.close();
+	  }
+
+	 }
+
+	   /* */
+    }
+     ffile.close();
+
+    getch();
+}
+//============================FINAL REPORT CODE============================
+void Password()
+{
+	clrscr();
+	char password[10],ch,opt2;
+	int i;
+	      do
+		{       i=0;
+			clrscr();
+			gotoxy(30,12);
+			cout<<"Enter Password";
+			gotoxy(30,14);
+			while((ch=getch())!='\r')
+			{
+				cout<<'*';
+				password[i]=ch;
+				i++;
+			}
+			password[i]='\0';
+			if(strcmp(password,"password")!=0)
+				{	gotoxy(20,16);
+					cout<<"Wrong password. Try again? (Y for Yes) ";
+					cin>>opt2;
+					if(tolower(opt2)=='y')
+				       {	continue; }
+					else
+					{	gotoxy(30,18);
+						cout<<"Exiting program. ";
+						getch();
+						exit(0);
+					}
+				}
+			else
+			break;
+		}while(opt2=='y'||opt2=='Y');
+	clrscr();
+	gotoxy(30,12);
+	cout<<"Access Granted!";
+	gotoxy(30,15);
+	cout<<"Press any key to continue. ";
+	getch();
+}
+
+//============================MAIN STARTS HERE=============================
+
+
+void main()
+{
+	clrscr();
+	students s1,s2;
+	exams e1,e2;
+	int ch1,ch2,ch3;
+	Password();
+	while(1)
+      {
+	clrscr();
+
+	gotoxy(1,1);
+	cout<<"********************************************************************************";
+	gotoxy(30,3);
+	cout<<"STUDENT MANAGEMENT SYSTEM";
+	gotoxy(1,5);
+	cout<<"********************************************************************************";
+	gotoxy(30,6);
+	cout<<"You are: ";
+	gotoxy(30,7);
+	cout<<"1. Principal. ";
+	gotoxy(30,8);
+	cout<<"2. Parent. ";
+	gotoxy(30,9);
+	cout<<"3. Not applicable. Exit. ";
+	gotoxy(1,10);
+	cout<<"********************************************************************************";
+	gotoxy(30,12);
+	cout<<"Please enter your choice. ";
+	cin>>ch1;
+	getch();
+	switch(ch1)
+	{
+	    case 1: PrincipalMenu();
+		    break;
+
+	    case 2: ReportCard();
+		    break;
+
+	    case 3: exit(0);
+		    break;
+	}
+     }
+
+     getch();
+}
